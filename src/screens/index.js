@@ -1,2 +1,4 @@
 export { StartScreen } from './StartScreen'
-export { CreateGameScreen } from './CreateGameScreen'
+export { CreateGame } from './CreateGame'
+export { ChooseGame } from './ChooseGame'
+export { Game } from './Game'
