@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../components/Componets';
 import { rollAnimalDice } from '../utils';
-import { links } from '../constants/roures';
 
 export const Game = ({ match, history }) => {
   const [gameInfo, setGameInfo] = useState(null);
@@ -12,7 +11,7 @@ export const Game = ({ match, history }) => {
       const currentGame = gameFromLS[match.params.id];
 
       if (!currentGame) {
-        history.push(links.authorized.CreateGame);
+        history.goBack();
       }
 
       setGameInfo(currentGame);

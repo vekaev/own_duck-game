@@ -26,8 +26,6 @@ D
 src/screens/index.js,c/a/ca19fa00efe812aeb1b643ae4cc3e2822c575095
 L
 src/components/Componets.jsx,9/a/9a4240fe2251446dc25f8947bb3a4e7f86019166
-P
- src/screens/CreateGameScreen.jsx,0/4/04979dcdb67f237acbff6385243140a59bc5e2a7
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

@@ -1,0 +1,21 @@
+body {
+  background-color: #795548;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content {
+  border-radius: 2px;
+  background-color: white;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  height: calc(100vh - 15px);
+  overflow: scroll;
+  border: 5px solid #cddc39;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li{
+  color:  #795548;
+}

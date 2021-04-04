@@ -8,9 +8,11 @@ import {
 function App() {
   const [user] = useState(true);
     return (
+      <div className="content">
         <Router>
           {user ? <Authorized/> : <UnAuthorized/>}
         </Router>
+      </div>
     )
 }
 

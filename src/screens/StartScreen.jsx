@@ -1,15 +1,17 @@
-import { Button, Title } from '../components/Componets';
-import { links } from '../constants/roures';
-import { createPath } from '../utils';
+import { Button } from '../components/Componets';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import DnsIcon from '@material-ui/icons/Dns';
 
-export const StartScreen = () => {
-  console.log('hello world');
-  return (
-    <>
-      <Title>Duck</Title>
-      <Button href={links.authorized.CreateGame}>Create game</Button>
-      <br />
-      <Button href={links.authorized.ChooseGame}>Continue</Button>
-    </>
-  );
-};
+import { links } from '../constants/roures';
+import styles from './Style.module.scss';
+
+export const StartScreen = () =>  (
+    <div className={styles.intro}>
+      <h1>DUCK</h1>
+      <div className={styles.btn_part}>
+        <Button href={links.authorized.CreateGame} endIcon={<WhatshotIcon htmlColor='white'/>}>Create</Button>
+        <Button href={links.authorized.ChooseGame} endIcon={<DnsIcon htmlColor='white'/>}>Choose</Button>
+      </div>
+      <p>created by Yevhenii and Artem</p>
+    </div>
+);

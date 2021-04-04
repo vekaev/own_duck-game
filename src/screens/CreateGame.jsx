@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { Button, Title } from '../components/Componets';
 import { links } from '../constants/roures';
 import { v4 as uuidv4 } from 'uuid';
+import DeleteIcon from "@material-ui/icons/Delete";
+import {IconButton, TextField} from "@material-ui/core";
 
 export const CreateGame = ({ history }) => {
   const [title, setTitle] = useState('New Game...');
@@ -69,7 +71,7 @@ export const CreateGame = ({ history }) => {
 
   return (
     <form onSubmit={handleCreateGame}>
-      <input
+      <TextField
         type='text'
         value={title}
         onChange={(event) => setTitle(event.target.value)}
@@ -101,13 +103,19 @@ const PlayerInput = ({ index, user, setName, deletePlayer }) => {
   return (
     <div>
       <p>{index + 1}</p>
-      <input
+      <TextField
         required
         placeholder={'Write your name'}
         value={user.name}
         onChange={setName(user.id)}
       />
-      {index >= 2 && <Button onClick={deletePlayer(user.id)}>D</Button>}
+      {index >= 2 && <IconButton
+        color="secondary"
+        aria-label='delete'
+        onClick={deletePlayer(user.id)}
+      >
+        <DeleteIcon />
+      </IconButton>}
     </div>
   );
 };

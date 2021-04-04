@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../components/Componets';
 import { links } from '../constants/roures';
+import {ButtonGroup, IconButton} from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import SportsEsportsOutlinedIcon from '@material-ui/icons/SportsEsportsOutlined';
 
 export const LS = localStorage;
 
 // players: [ {id, name}]
 // games: {gameId:uuid, title:''}
 
-export const ChooseGame = () => {
+export const ChooseGame = ({history}) => {
   const [gamesList, setGamesList] = useState([]);
 
   useEffect(() => {
@@ -43,10 +46,25 @@ export const ChooseGame = () => {
         <ul>
           {gamesList.map((game) => (
             <li key={game.id}>
-              {game.title}{' '}
-              <button data-id={game.id} onClick={handleRemoveGame(game.id)}>
-                x
-              </button>
+
+                {game.title}
+
+
+                <IconButton
+                  color="primary"
+                  aria-label='play'
+                  onClick={() => history.push(links.authorized.game + `/${game.id}`)}
+                >
+                  <SportsEsportsOutlinedIcon />
+                </IconButton>
+                <IconButton
+                  color="secondary"
+                  aria-label='delete'
+                  onClick={handleRemoveGame(game.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+
             </li>
           ))}
         </ul>
