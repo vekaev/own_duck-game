@@ -4,19 +4,25 @@ import { links } from '../constants/roures';
 import { v4 as uuidv4 } from 'uuid';
 
 export const CreateGame = ({ history }) => {
+  const [title, setTitle] = useState('New Game...');
   const [players, setPlayers] = useState({});
 
   const playersLength = useMemo(() => Object.keys(players).length, [players]);
 
   const handleCreateGame = () => {
     const id = uuidv4();
-    const game = {
-      id,
-      title: `Game ${id}`,
-      players,
-    };
+
     const existGames = JSON.parse(localStorage.getItem('games')) || [];
-    localStorage.setItem('games', JSON.stringify([...existGames, game]));
+    localStorage.setItem(
+      'games',
+      JSON.stringify({
+        ...existGames,
+        [id]: {
+          title,
+          players,
+        },
+      })
+    );
     localStorage.removeItem('players');
     history.push(`${links.authorized.game}/${id}`);
   };
@@ -27,8 +33,8 @@ export const CreateGame = ({ history }) => {
         setPlayers(JSON.parse(localStorage.getItem('players')));
       } else {
         const startPack = {
-          [uuidv4()]: 'Squirrel',
-          [uuidv4()]: 'Friend of squirrel',
+          [uuidv4()]: { name: 'Squirrel' },
+          [uuidv4()]: { name: 'Friend of squirrel' },
         };
         setPlayers(startPack);
         localStorage.setItem('players', JSON.stringify(startPack));
@@ -47,7 +53,10 @@ export const CreateGame = ({ history }) => {
   };
 
   const addPlayer = () => {
-    setPlayers((prevPlayers) => ({ ...prevPlayers, [uuidv4()]: '' }));
+    setPlayers((prevPlayers) => ({
+      ...prevPlayers,
+      [uuidv4()]: { name: 'New Squirrel' },
+    }));
   };
 
   const deletePlayer = (id) => () => {
@@ -59,23 +68,32 @@ export const CreateGame = ({ history }) => {
   };
 
   return (
-    <>
+    <form onSubmit={handleCreateGame}>
+      <input
+        type='text'
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+        required
+      />
       <Title>Players:</Title>
-      {Object.entries(players).map((item, index) => {
-        const [id, name] = item;
-        return (
-          <PlayerInput
-            key={id}
-            index={index}
-            user={{ id, name }}
-            setName={changePlayerName}
-            deletePlayer={deletePlayer}
-          />
-        );
-      })}
-      {playersLength < 4 && <Button onClick={addPlayer}>Add</Button>}
-      <Button onClick={handleCreateGame}>Create game</Button>
-    </>
+      {Object.entries(players).map(([id, { name }], index) => (
+        <PlayerInput
+          key={id}
+          index={index}
+          user={{ id, name }}
+          setName={changePlayerName}
+          deletePlayer={deletePlayer}
+        />
+      ))}
+      {playersLength < 4 && (
+        <Button type='button' onClick={addPlayer}>
+          Add
+        </Button>
+      )}
+      <Button type='submit' onClick={handleCreateGame}>
+        Create game
+      </Button>
+    </form>
   );
 };
 
@@ -84,6 +102,7 @@ const PlayerInput = ({ index, user, setName, deletePlayer }) => {
     <div>
       <p>{index + 1}</p>
       <input
+        required
         placeholder={'Write your name'}
         value={user.name}
         onChange={setName(user.id)}
