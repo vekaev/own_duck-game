@@ -1,5 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
-import { StartScreen, CreateGame, ChooseGame, Game } from '../screens';
+import { StartScreen, ChooseGame, Game } from '../screens';
+import { CreateGame } from '../screens/CreateGame/CreateGame'
 import { links } from '../constants/roures';
 import { createPath } from '../utils';
 

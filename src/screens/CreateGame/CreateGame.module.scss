@@ -1,0 +1,32 @@
+.createGame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+.form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  flex-direction: column;
+}
+.input-label {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.wrapper {
+  width: 100%;
+  max-width: 370px;
+}
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  button {
+    &:first-child {
+      margin-left: 0;
+    }
+    margin-left: 20px;
+  }
+}

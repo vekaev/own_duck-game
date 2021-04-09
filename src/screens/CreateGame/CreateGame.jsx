@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Button, Title } from '../components/Componets';
-import { links } from '../constants/roures';
+import { Button, Title } from '../../components/Componets';
+import { links } from '../../constants/roures';
 import { v4 as uuidv4 } from 'uuid';
 import DeleteIcon from "@material-ui/icons/Delete";
-import {IconButton, TextField} from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
+import styles from './CreateGame.module.scss'
 
 export const CreateGame = ({ history }) => {
   const [title, setTitle] = useState('New Game...');
@@ -70,40 +71,49 @@ export const CreateGame = ({ history }) => {
   };
 
   return (
-    <form onSubmit={handleCreateGame}>
-      <TextField
-        type='text'
-        value={title}
-        onChange={(event) => setTitle(event.target.value)}
-        required
-      />
-      <Title>Players:</Title>
-      {Object.entries(players).map(([id, { name }], index) => (
-        <PlayerInput
-          key={id}
-          index={index}
-          user={{ id, name }}
-          setName={changePlayerName}
-          deletePlayer={deletePlayer}
-        />
-      ))}
-      {playersLength < 4 && (
-        <Button type='button' onClick={addPlayer}>
-          Add
-        </Button>
-      )}
-      <Button type='submit' onClick={handleCreateGame}>
-        Create game
-      </Button>
-    </form>
+    <div className={styles['createGame']}>
+      <form onSubmit={handleCreateGame} className={styles['form']}>
+        <div className={styles['wrapper']}>
+          <TextField
+            style={{ width: '100%' }}
+            type='text'
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            required
+          />
+
+          <Title>Players:</Title>
+          {Object.entries(players).map(([id, { name }], index) => (
+            <PlayerInput
+              key={id}
+              index={index}
+              user={{ id, name }}
+              setName={changePlayerName}
+              deletePlayer={deletePlayer}
+            />
+          ))}
+          <div className={styles['actions']}>
+            {playersLength < 4 && (
+              <Button type='button' onClick={addPlayer}>
+                Add
+              </Button>
+            )}
+            <Button type='submit' onClick={handleCreateGame}>
+              Create game
+           </Button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 
 const PlayerInput = ({ index, user, setName, deletePlayer }) => {
   return (
-    <div>
+    <div className={styles['input-label']}>
       <p>{index + 1}</p>
       <TextField
+        style={{ width: '100%' }}
         required
         placeholder={'Write your name'}
         value={user.name}
