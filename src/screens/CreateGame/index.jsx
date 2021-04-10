@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Button } from '../../components/Componets';
+import {Button, Header} from '../../components/Componets';
 import { links } from '../../constants/roures';
 import { v4 as uuidv4 } from 'uuid';
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -7,7 +7,7 @@ import { IconButton, TextField } from "@material-ui/core";
 import styles from './CreateGame.module.scss'
 
 export const CreateGame = ({ history }) => {
-  const [title, setTitle] = useState('New Game...');
+  const [title, setTitle] = useState('New game name...');
   const [players, setPlayers] = useState({});
 
   const playersLength = useMemo(() => Object.keys(players).length, [players]);
@@ -52,7 +52,7 @@ export const CreateGame = ({ history }) => {
 
     if (text.split('').length === 0) return;
 
-    setPlayers((prevPlayers) => ({ ...prevPlayers, [id]: text }));
+    setPlayers((prevPlayers) => ({ ...prevPlayers, [id]: { name: text} }));
   };
 
   const addPlayer = () => {
@@ -71,12 +71,14 @@ export const CreateGame = ({ history }) => {
   };
 
   return (
+    <>
+      <Header/>
+
     <div className={styles['createGame']}>
       <h1>New Game</h1>
       <form onSubmit={handleCreateGame} className={styles['form']}>
-        <div className={styles['wrapper']}>
           <TextField
-            style={{ width: '100%' }}
+            style={{ width: '100%', margin: '30px 0'}}
             type='text'
             value={title}
             onChange={(event) => setTitle(event.target.value)}
@@ -97,13 +99,13 @@ export const CreateGame = ({ history }) => {
                 Add
               </Button>
             )}
-            <Button type='submit' onClick={handleCreateGame}>
+            <Button className={styles['actions_submit']} type='submit' onClick={handleCreateGame}>
               Start
            </Button>
           </div>
-        </div>
       </form>
     </div>
+    </>
   );
 };
 
@@ -114,6 +116,7 @@ const PlayerInput = ({ index, user, setName, deletePlayer }) => {
       <TextField
         style={{ width: '80%' }}
         required
+        name={'name' + index}
         placeholder={'Write your name'}
         value={user.name}
         onChange={setName(user.id)}
@@ -126,5 +129,6 @@ const PlayerInput = ({ index, user, setName, deletePlayer }) => {
         <DeleteIcon />
       </IconButton>}
     </div>
+
   );
 };

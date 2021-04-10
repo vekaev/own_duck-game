@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from "@material-ui/core";
 import App from './App';
 import './style.scss';
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import {theme} from "./utils/theme";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: '#795548' },
-    secondary: { main: '#C9DD9C' },
-  },
-});
 
 ReactDOM.render(
   <React.StrictMode>

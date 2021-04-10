@@ -1,7 +1,6 @@
-import { Button } from '../components/Componets';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import DnsIcon from '@material-ui/icons/Dns';
-
+import { Button } from '../components/Componets';
 import { links } from '../constants/roures';
 import styles from './Style.module.scss';
 

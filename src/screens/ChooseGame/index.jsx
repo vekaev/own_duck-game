@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from '../components/Componets';
-import { links } from '../constants/roures';
+import {Button, Header} from '../../components/Componets';
+import { links } from '../../constants/roures';
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
-import SportsEsportsOutlinedIcon from '@material-ui/icons/SportsEsportsOutlined';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import styles from './ChooseGame.module.scss'
 
 export const LS = localStorage;
 
@@ -44,38 +45,37 @@ export const ChooseGame = ({history}) => {
 
   return (
     <div>
-      <h2>Choose game</h2>
-      {gamesList.length > 0 && (
-        <ul>
+      <Header/>
+      <h1>Choose game</h1>
+      {gamesList.length > 0 ? (
+        <ul className={styles.list}>
           {gamesList.map((game) => (
-            <li key={game.id}>
+            <li key={game.id} className={styles.list_item}>
 
-                {game.title}
+              {game.title}
 
-
-                <IconButton
-                  color="primary"
-                  aria-label='play'
-                  onClick={() => history.push(links.authorized.game + `/${game.id}`)}
-                >
-                  <SportsEsportsOutlinedIcon />
-                </IconButton>
-                <IconButton
-                  color="secondary"
-                  aria-label='delete'
-                  onClick={handleRemoveGame(game.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-
+              <IconButton
+                className={styles.play_btn}
+                color="secondary"
+                aria-label='play'
+                onClick={() => history.push(links.authorized.game + `/${game.id}`)}
+              >
+                <ArrowRightAltIcon style={{ fontSize: 30 }} />
+              </IconButton >
+              <IconButton
+                color="secondary"
+                aria-label='delete'
+                onClick={handleRemoveGame(game.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
             </li>
           ))}
         </ul>
-      )}
-      {!gamesList.length && (
+      ) : (
         <p>
-          You don't have any game. Please,{' '}
-          <Button href={links.authorized.CreateGame}>create Game</Button>
+          You don't have any game. Please
+          <Button style={{marginTop: 20}} href={links.authorized.CreateGame}>create Game</Button>
         </p>
       )}
     </div>
