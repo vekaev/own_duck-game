@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../components/Componets';
 import { links } from '../constants/roures';
-import {ButtonGroup, IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import SportsEsportsOutlinedIcon from '@material-ui/icons/SportsEsportsOutlined';
 
@@ -10,17 +10,19 @@ export const LS = localStorage;
 // players: [ {id, name}]
 // games: {gameId:uuid, title:''}
 
+const convertGameToArray = (obj) => {
+  return Object.entries(obj || {}
+  ).map(([id, value]) => {
+    value.id = id;
+    return value;
+  }) || []
+}
+
 export const ChooseGame = ({history}) => {
   const [gamesList, setGamesList] = useState([]);
 
   useEffect(() => {
-    const gamesFromLS = Object.entries(
-      JSON.parse(LS.getItem('games')) || {}
-    ).map(([id, value]) => {
-      value.id = id;
-      return value;
-    });
-    setGamesList(gamesFromLS || []);
+    setGamesList(convertGameToArray(JSON.parse(LS.getItem('games'))))
   }, []);
 
   const handleRemoveGame = useCallback(
@@ -32,9 +34,10 @@ export const ChooseGame = ({history}) => {
       //Fetch games
       let games = JSON.parse(LS.getItem('games'));
       delete games[id];
+      console.log(games)
       //update games
       localStorage.setItem('games', JSON.stringify(games));
-      setGamesList(games);
+      setGamesList(convertGameToArray(games));
     },
     []
   );
@@ -80,3 +83,4 @@ export const ChooseGame = ({history}) => {
 };
 
 export default ChooseGame;
+

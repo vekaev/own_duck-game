@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Button, Title } from '../../components/Componets';
+import { Button } from '../../components/Componets';
 import { links } from '../../constants/roures';
 import { v4 as uuidv4 } from 'uuid';
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -72,6 +72,7 @@ export const CreateGame = ({ history }) => {
 
   return (
     <div className={styles['createGame']}>
+      <h1>New Game</h1>
       <form onSubmit={handleCreateGame} className={styles['form']}>
         <div className={styles['wrapper']}>
           <TextField
@@ -81,8 +82,6 @@ export const CreateGame = ({ history }) => {
             onChange={(event) => setTitle(event.target.value)}
             required
           />
-
-          <Title>Players:</Title>
           {Object.entries(players).map(([id, { name }], index) => (
             <PlayerInput
               key={id}
@@ -99,7 +98,7 @@ export const CreateGame = ({ history }) => {
               </Button>
             )}
             <Button type='submit' onClick={handleCreateGame}>
-              Create game
+              Start
            </Button>
           </div>
         </div>
@@ -111,9 +110,9 @@ export const CreateGame = ({ history }) => {
 const PlayerInput = ({ index, user, setName, deletePlayer }) => {
   return (
     <div className={styles['input-label']}>
-      <p>{index + 1}</p>
+      <p className={styles['input-label_index']}>{index + 1}</p>
       <TextField
-        style={{ width: '100%' }}
+        style={{ width: '80%' }}
         required
         placeholder={'Write your name'}
         value={user.name}

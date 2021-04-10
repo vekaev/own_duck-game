@@ -1,21 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
+
+$color_dark: #505050;
+$color_light_brown: #DBD6B9;
+$color_light_blue: #EBF5FB;
+
 body {
-  background-color: #795548;
+  position: relative;
+  background-color: $color_light_brown;
   height: 100vh;
   overflow: hidden;
+  margin: 0;
+  padding: 10px;
+  padding-top: 0;
+  &:before {
+    content:'';
+    display: block;
+    background-color: white;
+    position: absolute;
+    height: 30vh;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+#root {
+  z-index: 1;
+}
+* {
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .content {
-  border-radius: 2px;
-  background-color: white;
+  border-radius:  0 0 10px 10px;
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
-  height: calc(100vh - 15px);
+  height: calc(100vh - 40px);
   overflow: scroll;
-  border: 5px solid #cddc39;
   box-sizing: border-box;
+  box-shadow: 0 0 5px -3px;
+  background-color: white;
+  position: relative;
+  z-index:1;
+  &:before {
+    content: '';
+    display: block;
+    height: 500px;
+    width: 500px;
+    position: absolute;
+    top: -150px;
+    right: -250px;
+    border-radius: 50%;
+    background-color: $color_light_blue;
+
+  }
+  & > div {
+    height: 100% ;
+  }
 }
 
 h1, h2, h3, h4, h5, h6, p, a, li{
-  color:  #795548;
+  color: $color_dark;
+}
+
+h1 {
+  font-size: 50px;
+  z-index:1;
 }

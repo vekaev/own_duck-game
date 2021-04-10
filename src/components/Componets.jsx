@@ -3,18 +3,16 @@ import { NavLink } from 'react-router-dom';
 import ButtonComponent from '@material-ui/core/Button';
 
 const Button = (props) => {
-  const { children, className, href } = props;
+  const { children, href } = props;
   if (href) {
     return (
       <ButtonComponent
         variant="contained"
         color='secondary'
+        component={NavLink}
+        to={href}
         {...props}
-      >
-        <NavLink className={`${styles.Button} ${className}`} to={href}>
-          {children}
-        </NavLink>
-      </ButtonComponent>
+      >{children}</ButtonComponent>
     );
   }
 
@@ -22,7 +20,6 @@ const Button = (props) => {
     <ButtonComponent
       variant="contained"
       color='primary'
-      className={{ ...styles.Button, ...className }}
       {...props}
     >
       {children}
