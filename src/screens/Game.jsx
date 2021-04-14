@@ -8,6 +8,7 @@ import Fade from '@material-ui/core/Fade';
 
 export const Game = ({ match, history }) => {
   const [gameInfo, setGameInfo] = useState(null);
+  const [mock, setMock] = useState(0);
 
   useEffect(() => {
     if (!gameInfo) {
@@ -27,19 +28,56 @@ export const Game = ({ match, history }) => {
     if (!gameInfo) return;
 
     const gameFromLS = JSON.parse(localStorage.getItem('games'));
-    localStorage.setItem(
-      'games',
-      JSON.stringify({ ...gameFromLS, [match.params.id]: gameInfo })
-    );
+    try {
+      localStorage.setItem(
+        'games',
+        JSON.stringify({...gameFromLS, [match.params.id]: {...gameInfo, mock}})
+      );
+    } catch (e) {
+      console.log(e)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameInfo]);
 
-  if (!gameInfo) return 'Loading';
+  const saveGameHandler = () => {
+    const gameFromLS = JSON.parse(localStorage.getItem('games'));
+    JSON.stringify(
+      { ...gameFromLS,
+        [match.params.id]: {
+        ...gameInfo,
+          stepsStory: [...gameInfo.stepsStory || [], gameInfo]}
+      }
+    )
+    setGameInfo(gameInfo => ({...gameInfo,
+      stepsStory: [...gameInfo.stepsStory || [], gameInfo]}))
+    console.log(JSON.parse(localStorage.getItem('games')));
+  }
 
+  const goBackGameHandler = () => {
+    const gameFromLS = JSON.parse(localStorage.getItem('games'));
+    const lastGame = gameFromLS[match.params.id]
+    console.log(lastGame);
+    if (!lastGame.stepsStory) lastGame.stepsStory = []
+    const lastGameStory = lastGame?.stepsStory[lastGame?.stepsStory.length - 1]
+    console.log(lastGameStory)
+    if (!lastGameStory) return
+
+    JSON.stringify(
+      { ...gameFromLS,
+        [match.params.id]: {
+          ...lastGame,
+          stepsStory: gameInfo?.stepsStory.unshift() || []
+      }
+      }
+    )
+  }
+
+  if (!gameInfo) return 'Loading';
+  console.log(gameInfo);
   return (
     <>
-      <h1>{gameInfo.title}</h1>
-      <h2>Players score:</h2>
+      <p>{gameInfo.title}</p>
+      <p>Players score:</p>
       {Object.values(gameInfo.players).map(({ name }, idx) => {
         return (
           <div key={idx}>
@@ -47,8 +85,16 @@ export const Game = ({ match, history }) => {
           </div>
         );
       })}
+      <p> mock {mock}</p>
+      <p> gameInfo.mock {gameInfo.mock}</p>
       <br />
-      <Button onClick={rollAnimalDice}>Roll Dice</Button>
+      <Button onClick={() => console.table(rollAnimalDice())}>Roll Dice</Button>
+      <Button onClick={saveGameHandler}>save</Button>
+      <Button onClick={goBackGameHandler}>back</Button>
+      <Button onClick={() => {
+        setMock(mock => mock + 1)
+        saveGameHandler()
+      }}>Player + 1</Button>
       <TransitionsModal/>
     </>
   );

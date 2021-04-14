@@ -13,6 +13,7 @@ const Button = (props) => {
         color='secondary'
         component={NavLink}
         to={href}
+        className={styles.Button}
         {...props}
       >{children}</ButtonComponent>
     );

@@ -73,9 +73,9 @@ export const ChooseGame = ({history}) => {
           ))}
         </ul>
       ) : (
-        <p>
-          You don't have any game. Please
-          <Button style={{marginTop: 20}} href={links.authorized.CreateGame}>create Game</Button>
+        <p className={styles.noGamesContainer}>
+          You don't have any game...
+          <Button style={{marginTop: 20}} href={links.authorized.CreateGame}>Lets create new game</Button>
         </p>
       )}
     </div>
