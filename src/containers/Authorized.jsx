@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 import { StartScreen, ChooseGame, CreateGame, Game } from '../screens';
 import { links } from '../constants/roures';
 import { createPath } from '../utils';
+import CongradulationScreen from '../screens/CongradulationScreen';
 
 export const Authorized = () => {
   return (
@@ -20,6 +21,9 @@ export const Authorized = () => {
         path={createPath(links.authorized.game + '/:id')}
         component={Game}
       />
+      <Route  
+        path={createPath(links.authorized.finish)}
+        component={CongradulationScreen} />
       <Route path={links.authorized.start} component={StartScreen} />
     </Switch>
   );
