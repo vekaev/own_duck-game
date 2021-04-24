@@ -8,7 +8,7 @@ import Fade from '@material-ui/core/Fade';
 
 export const Game = ({ match, history }) => {
   const [gameInfo, setGameInfo] = useState(null);
-  const [mock, setMock] = useState(0);
+  const [mock, setMock] = useState(gameInfo?.mock || 0);
 
   useEffect(() => {
     if (!gameInfo) {
@@ -69,6 +69,10 @@ export const Game = ({ match, history }) => {
           stepsStory: gameInfo?.stepsStory.unshift() || []
       }
       }
+    )
+    setGameInfo(
+      gameInfo => ({...lastGame,
+        stepsStory: gameInfo?.stepsStory.unshift() || []})
     )
   }
 
